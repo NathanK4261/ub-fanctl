@@ -10,6 +10,7 @@ sudo systemctl disable ub-fanctl && sudo systemctl stop ub-fanctl
 
 # Move service file out of systemd
 sudo rm /etc/systemd/system/ub-fanctl.service
+sudo rm /etc/systemd/system/ub-fanctl.service
 
 # Reload daemon
 sudo systemctl daemon-reload
