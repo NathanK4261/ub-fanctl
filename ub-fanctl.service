@@ -1,0 +1,13 @@
+[Unit]
+Description=Ubuntu Fan Controller (Made By: Nathan D. Keidel)
+After=network.target
+
+[Service]
+User=
+Group=
+WorkingDirectory=
+ExecStart=
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
