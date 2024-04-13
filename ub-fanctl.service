@@ -5,9 +5,15 @@ After=network.target
 [Service]
 User=
 Group=
+
 WorkingDirectory=
 ExecStart=
+
 Restart=always
+RestartSec=5
+
+AmbientCapabilities=CAP_SYS_RAWIO CAP_SYS_ADMIN
+CapabilityBoundingSet=CAP_SYS_RAWIO CAP_SYS_ADMIN
 
 [Install]
 WantedBy=multi-user.target
