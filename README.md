@@ -15,14 +15,20 @@ Controll GPIO fans on a raspberry pi running Ubuntu
             [Unit]
             Description=Ubuntu Fan Controller (Made By: Nathan D. Keidel)
             After=network.target
-            
+                        
             [Service]
             User=john
             Group=john
+
             WorkingDirectory=/home/john/ub-fanctl/
-            ExecStart= /usr/bin/python3 /home/john/ub-fanctl/controller.py
+            ExecStart=/usr/bin/python3 /home/john/ub-fanctl/controller.py
+
             Restart=always
-            
+            RestartSec=5
+
+            AmbientCapabilities=CAP_SYS_RAWIO CAP_SYS_ADMIN
+            CapabilityBoundingSet=CAP_SYS_RAWIO CAP_SYS_ADMIN
+                        
             [Install]
             WantedBy=multi-user.target
           ```
