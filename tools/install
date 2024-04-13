@@ -11,7 +11,7 @@ sudo apt-get install python3-lgpio
 sudo cp ../ub-fanctl.service /etc/systemd/system
 
 # Reload daemon and print operation ststus
-sudo systemctl daemon-reload && sudo systemctl enable ub-fanctl && sudo systemctl start ub-fanctl && sudo systemctl daemon-reload
+sudo systemctl daemon-reload && sudo systemctl enable ub-fanctl && sudo systemctl start ub-fanctl
 
 # Clear terminal and print status
 clear; sudo systemctl status ub-fanctl
