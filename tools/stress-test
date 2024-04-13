@@ -11,7 +11,7 @@ max_vm=$(free -m | awk '/Mem:/{print $2}') # Maximum available memory in MB
 
 # Run stress-ng with the maximum values
 clear; echo "Running a stress test using all system rescources..."
-sudo stress-ng --cpu $max_cpu --io $max_io --vm $max_vm --vm-bytes 1G --timeout 120s
+sudo stress-ng --cpu $max_cpu --io $max_io --vm $max_vm --vm-bytes 1G --timeout 600s
 
 sudo apt-get purge -y stress-ng
 sudo apt autoremove -y
