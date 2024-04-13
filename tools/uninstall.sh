@@ -13,3 +13,8 @@ sudo mv /etc/systemd/system/ub-fanctl.service .
 
 # Reload daemon
 sudo systemctl daemon-reload
+
+clear
+
+echo "Here are related symbolic links to ub-facntl that you might want to delete"
+find / -type l -ls 2>/dev/null | grep ub-fanctl
