@@ -57,7 +57,7 @@ try:
     while True:
 
         # Temp debugger (keep commented out for normal use)
-        temp_debugger()
+        #temp_debugger()
 
         if TEMP is not None:
             if TEMP >= TEMP_MAX and TEMP > RETURN_TEMP and not FAN_RUNNING:
