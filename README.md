@@ -19,7 +19,7 @@ Controll GPIO fans on a raspberry pi running Ubuntu
             [Service]
             User=john
             Group=john
-            WorkingDirectory=/home/john/ub-fanctl
+            WorkingDirectory=/home/john/ub-fanctl/
             ExecStart= /usr/bin/python3 /home/john/ub-fanctl/controller.py
             Restart=always
             
