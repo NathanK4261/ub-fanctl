@@ -15,7 +15,7 @@ FAN_RUNNING = None
 
 # Config values
 DATA_PIN = 14 # GPIO (DATA) pin of the fan, not power or ground!
-TEMP_MAX = 50 # The temperature in which the fans will turn on
+TEMP_MAX = 70 # The temperature in which the fans will turn on
 RETURN_TEMP = 40 # The temperature to which the computer will cool down to once fans are activated (fans turn off after "RETURN_TEMP" is reached)
 INTERVAL = 1 # Seconds between each temperature measure
 
