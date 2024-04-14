@@ -2,8 +2,9 @@
 Controll GPIO fans on a raspberry pi running Ubuntu
 
 ## System Requirements
+* Raspberry Pi (most should work, the software was tested on a Model 4B)
 * Ubuntu (currently tested on Ubuntu Server 22.04.4 LTS)
-* lgpio (`sudo apt update && sudo apt install python3-lgpio`)
+* lgpio (To install: `sudo apt update && sudo apt install python3-lgpio`)
 
 ## Install
 * Clone this repo into your home directory (`echo $HOME` if you dont know your home directory)
@@ -56,3 +57,5 @@ I provided a simple stress test script that:
 
 To run, navigate to the "tools" directory and run the stress test:
 * `./stress-test`
+
+You can use this script to test if your system can cool itself down using the current configuration values in the "controller.py" script. If you notice your system is not cooling down, try changing the `MAX_TEMP` value in the controller script so the fan "kicks in" sooner.
