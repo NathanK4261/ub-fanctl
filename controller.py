@@ -36,9 +36,6 @@ def ticker():
         TICKER = True
         time.sleep(3)
 
-def temp_debugger():
-    print(str(TEMP)+"° |", "Fan:", "On" if FAN_RUNNING else "Off")
-
 def thermometer():
     global TEMP
 
@@ -73,7 +70,7 @@ try:
                 lgpio.gpio_write(chip, DATA_PIN, 0)
                 FAN_RUNNING = False
             if TICKER:
-                temp_debugger()
+                print(str(TEMP)+"° |", "Fan:", "On" if FAN_RUNNING else "Off")
                 TICKER = False
 
 except KeyboardInterrupt:
