@@ -8,65 +8,74 @@ import subprocess
 # Initialize the library
 chip = lgpio.gpiochip_open(0)
 
-# Globals
+# Booleans
 TEMP = None
 RUN = True
 FAN_RUNNING = None
+TICKER = False
 
 # Config values
 DATA_PIN = 14 # GPIO (DATA) pin of the fan, not power or ground!
-TEMP_MAX = 70 # The temperature in which the fans will turn on
+TEMP_MAX = 60 # The temperature in which the fans will turn on
 RETURN_TEMP = 40 # The temperature to which the computer will cool down to once fans are activated (fans turn off after "RETURN_TEMP" is reached)
 INTERVAL = 1 # Seconds between each temperature measure
 
 # Get the state of the fan
 state = lgpio.gpio_read(chip, DATA_PIN)
 
-if state == 1:
-    FAN_RUNNING = True
-else:
+if state != 1:
     # If there is no signal from the fan pin, do not run
     print("[ub-fanctl] - ERROR: No signal from fan, check pin configuration")
     exit(1)
 
+def ticker():
+    '''Function for allowing print statements to be ran ona timed interval without threading'''
+
+    global TICKER
+    while RUN:
+        TICKER = True
+        time.sleep(3)
+
 def temp_debugger():
-    subprocess.call("clear", shell=True)
     print(str(TEMP)+"° |", "Fan:", "On" if FAN_RUNNING else "Off")
 
-def get_temp():
-    """Get the CPU temperature in Celsius."""
+def thermometer():
     global TEMP
 
-    with open('/sys/class/thermal/thermal_zone0/temp', 'r') as file:
-        try:
-            TEMP = int(float(file.read().strip()) / 1000.0)
-        except:
-            TEMP = None
-
-def thermometer():
-    global RUN
     while RUN:
-        get_temp()
+        # Get the temperature of the computer
+        with open('/sys/class/thermal/thermal_zone0/temp', 'r') as file:
+            TEMP = int(float(file.read().strip()) / 1000.0)
+
         time.sleep(INTERVAL)
 
 # Run the thermometer in a thread
-thread = threading.Thread(target=thermometer)
-thread.start()
+thermometer_thread = threading.Thread(target=thermometer)
+thermometer_thread.start()
+
+ticker_thread = threading.Thread(target=ticker)
+ticker_thread.start()
 
 try:
-    while True:
-        # Temp debugger (keep commented out for normal use)
-        #temp_debugger()
+    # Reset GPIO pin by turning the fan off
+    lgpio.gpio_write(chip, DATA_PIN, 0)
+    FAN_RUNNING = False
 
+    while True:
         if TEMP is not None:
             if TEMP >= TEMP_MAX and not FAN_RUNNING:
                 # If max temperature reached + fans not running, spin up fans
                 lgpio.gpio_write(chip, DATA_PIN, 1)
                 FAN_RUNNING = True
-            if TEMP <= RETURN_TEMP and FAN_RUNNING:
+
+            elif TEMP <= RETURN_TEMP and FAN_RUNNING:
                 # If fans are running and the return temp has been reached, stop spinning fans
                 lgpio.gpio_write(chip, DATA_PIN, 0)
                 FAN_RUNNING = False
+            if TICKER:
+                temp_debugger()
+                TICKER = False
+
 except KeyboardInterrupt:
     pass
 except Exception as e:
