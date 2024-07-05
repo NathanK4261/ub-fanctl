@@ -39,7 +39,7 @@ Controll GPIO fans on a raspberry pi running Ubuntu
             sudo chmod +x *
             ./install
           ```
-    ub-fanctl should not be installed on your system. A reboot might be needed.
+    ub-fanctl should be installed on your system. A reboot might be needed.
 
 ## Uninstall
 To uninstall ub-fanctl:
