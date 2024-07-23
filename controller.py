@@ -42,9 +42,6 @@ def thermometer():
 thermometer_thread = threading.Thread(target=thermometer)
 thermometer_thread.start()
 
-ticker_thread = threading.Thread(target=ticker)
-ticker_thread.start()
-
 try:
     # Reset GPIO pin by turning the fan off
     lgpio.gpio_write(chip, DATA_PIN, 0)
