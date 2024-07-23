@@ -28,14 +28,6 @@ if state != 1:
     print("[ub-fanctl] - ERROR: No signal from fan, check pin configuration")
     exit(1)
 
-def ticker():
-    '''Function for allowing print statements to be ran ona timed interval without threading'''
-
-    global TICKER
-    while RUN:
-        TICKER = True
-        time.sleep(3)
-
 def thermometer():
     global TEMP
 
@@ -69,9 +61,6 @@ try:
                 # If fans are running and the return temp has been reached, stop spinning fans
                 lgpio.gpio_write(chip, DATA_PIN, 0)
                 FAN_RUNNING = False
-            if TICKER:
-                print(str(TEMP)+"° |", "Fan:", "On" if FAN_RUNNING else "Off")
-                TICKER = False
 
 except KeyboardInterrupt:
     pass
